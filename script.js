@@ -80,8 +80,10 @@ const onCardClicked = (e) => {
 
 const onSearchClicked = (e) => {
   e.preventDefault();
-  const value = document.getElementById("input").value;
+  const input = document.getElementById("input");
+  let value = input.value;
   filterMovies(value);
+  input.value = "";
 };
 
 function showAllCards() {
@@ -106,17 +108,21 @@ const filterMovies = (value, option = "title") => {
   if (cardsToShow.length == 0) {
     alert(`입력하신 '${value}'와 일치하는 영화가 없습니다!`);
     return;
+  } else if (value === "") {
+    alert("검색어를 입력해 주십시오.");
+    return;
   } else {
     cardsToDel.forEach((card) =>
       card.closest(".movie-card").classList.toggle("hidden")
     );
-    resetBtn.innerText = `${cardsToShow.length}개의 검색 결과 초기화`;
+    resetBtn.innerText = `'${value}' 에 대한 ${cardsToShow.length}개의 검색 결과 초기화`;
     resetBtn.classList.remove("invisible");
   }
 };
 
 const onResetBtnClicked = (e) => {
   e.target.classList.add("invisible");
+
   showAllCards();
 };
 
