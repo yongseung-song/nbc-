@@ -84,9 +84,15 @@ const onSearchClicked = (e) => {
   filterMovies(value);
 };
 
+function showAllCards() {
+  let cards = document.querySelectorAll(".movie-card");
+  cards.forEach((card) => card.classList.remove("hidden"));
+}
+
 // 미구현 사항 : 청불 영화/연도별 영화 필터를 넣을 계획
 const filterMovies = (value, option = "title") => {
-  console.log(value);
+  resetBtn.innerText = "";
+  showAllCards();
   let cards = Array.from(document.querySelectorAll(".movie-title"));
   let cardsToDel = [];
   let cardsToShow = cards.filter((card) => {
@@ -102,7 +108,7 @@ const filterMovies = (value, option = "title") => {
     return;
   } else {
     cardsToDel.forEach((card) =>
-      card.closest(".movie-card").classList.add("hidden")
+      card.closest(".movie-card").classList.toggle("hidden")
     );
     resetBtn.innerText += `${cardsToShow.length}개의 검색 결과 초기화`;
     resetBtn.classList.remove("invisible");
@@ -111,8 +117,7 @@ const filterMovies = (value, option = "title") => {
 
 const onResetBtnClicked = (e) => {
   e.target.classList.add("invisible");
-  let cards = document.querySelectorAll(".movie-card");
-  cards.forEach((card) => card.classList.remove("hidden"));
+  showAllCards();
 };
 
 const onDarkmodeBtnClicked = (e) => {
