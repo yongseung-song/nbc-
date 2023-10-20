@@ -66,7 +66,6 @@ input {
 input:focus {
   outline: 0 none;
 }
-
 main {
   grid-area: content;
   position: relative;
@@ -195,6 +194,7 @@ footer.dark-mode {
   box-sizing: border-box;
   box-shadow: 0px 8px 8px #eee;
   justify-self: center;
+  cursor: pointer;
 }
 article.dark-mode {
   box-shadow: none !important;
