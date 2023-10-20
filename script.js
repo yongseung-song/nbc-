@@ -1,6 +1,10 @@
 "use strict";
 const resetBtn = document.querySelector(".button-reset");
 const submitBtn = document.querySelector(".button-search");
+const darkmodeBtn = document.querySelector(".button-darkmode");
+const body = document.querySelector("body");
+const header = document.querySelector("header");
+const footer = document.querySelector("footer");
 
 const options = {
   method: "GET",
@@ -110,6 +114,23 @@ const onResetBtnClicked = (e) => {
   let cards = document.querySelectorAll(".movie-card");
   cards.forEach((card) => card.classList.remove("hidden"));
 };
+
+const onDarkmodeBtnClicked = (e) => {
+  body.classList.toggle("dark-mode");
+  header.classList.toggle("dark-mode");
+  footer.classList.toggle("dark-mode");
+  document.querySelector("#sidebar-right").classList.toggle("dark-mode");
+  document.querySelector("#sidebar-left").classList.toggle("dark-mode");
+  document
+    .querySelectorAll(".movie-card")
+    .forEach((card) => card.classList.toggle("dark-mode"));
+  document
+    .querySelectorAll("p")
+    .forEach((p) => p.classList.toggle("dark-mode"));
+  // e.target.closest("div").classList.toggle("dark-mode-buttons");
+};
+
 submitBtn.addEventListener("click", onSearchClicked);
 resetBtn.addEventListener("click", onResetBtnClicked);
+darkmodeBtn.addEventListener("click", onDarkmodeBtnClicked);
 getMovies();
