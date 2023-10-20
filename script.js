@@ -8,10 +8,6 @@ const options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YTVlZDU5NmIzNTk4ODZmNjY1MDdmOTgzMjM2NWVmNCIsInN1YiI6IjY1MmY4NGU2ZWE4NGM3MDBjYTEyZGYxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.EIRykaMpZeWLXpjyuX2pzqu0h562vsjwcptRXfSwL0s",
   },
 };
-const cardList = document.querySelector(".card-list");
-let p = document.createElement("p");
-p.innerText = "blahblah";
-cardList.appendChild(p);
 // TMDB API에서 데이터 받아오기
 async function getMovies() {
   const response = await fetch(
@@ -21,6 +17,7 @@ async function getMovies() {
     .then((response) => response.json())
     .catch((err) => console.error(err));
   // 영화 정보가 담긴 배열을 makeCards 함수의 아규먼트로 전달한다
+  // console.log(response.results);
   makeCards(response.results);
 }
 
@@ -42,7 +39,7 @@ const makeCards = (movies) => {
     const { name, poster_path, overview, vote_average, id } = movie;
     // 객체에서 뽑아낸 경로를 더해 완성한 이미지 전체 경로
     const url = baseUrl + posterSize + poster_path;
-    console.log(name, poster_path);
+    // console.log(name, poster_path);
 
     // 생성한 DOM element에 필요한 데이터를 넣어주는 과정
     card.setAttribute("data-id", id);
@@ -54,7 +51,7 @@ const makeCards = (movies) => {
     title.classList.add("movie-title");
     contents.innerText = overview;
     contents.classList.add("movie-overview");
-    rating.innerText = vote_average;
+    rating.innerText = `rating: ${vote_average}`;
     rating.classList.add("movie-rating");
     div.appendChild(title);
     div.appendChild(contents);
@@ -64,3 +61,4 @@ const makeCards = (movies) => {
     cardList.appendChild(card);
   });
 };
+getMovies();
