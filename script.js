@@ -1,4 +1,6 @@
 "use strict";
+const resetBtn = document.querySelector(".button-reset");
+const submitBtn = document.querySelector(".button-search");
 
 const options = {
   method: "GET",
@@ -11,7 +13,7 @@ const options = {
 // TMDB API에서 데이터 받아오기
 async function getMovies() {
   const response = await fetch(
-    "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1",
+    "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
     options
   )
     .then((response) => response.json())
@@ -32,11 +34,11 @@ const makeCards = (movies) => {
     const card = document.createElement("article");
     const img = document.createElement("img");
     const div = document.createElement("div");
-    const title = document.createElement("h3");
+    const name = document.createElement("h3");
     const contents = document.createElement("p");
     const rating = document.createElement("p");
     // 영화 객체에서 제목, 이미지경로, 내용, 평점 property를 뽑아내 저장한다
-    const { name, poster_path, overview, vote_average, id } = movie;
+    const { title, poster_path, overview, vote_average, id } = movie;
     // 객체에서 뽑아낸 경로를 더해 완성한 이미지 전체 경로
     const url = baseUrl + posterSize + poster_path;
     // console.log(name, poster_path);
@@ -44,16 +46,17 @@ const makeCards = (movies) => {
     // 생성한 DOM element에 필요한 데이터를 넣어주는 과정
     card.setAttribute("data-id", id);
     card.classList.add("movie-card");
+    card.addEventListener("click", onCardClicked);
     img.setAttribute("src", url);
     img.setAttribute("alt", name);
     div.classList.add("movie-card-content");
-    title.innerText = name;
-    title.classList.add("movie-title");
+    name.innerText = title;
+    name.classList.add("movie-title");
     contents.innerText = overview;
     contents.classList.add("movie-overview");
     rating.innerText = `rating: ${vote_average}`;
     rating.classList.add("movie-rating");
-    div.appendChild(title);
+    div.appendChild(name);
     div.appendChild(contents);
     div.appendChild(rating);
     card.appendChild(img);
@@ -61,4 +64,52 @@ const makeCards = (movies) => {
     cardList.appendChild(card);
   });
 };
+
+// 카드 클릭시 ID 를 보여주기 위한 이벤트 핸들러
+const onCardClicked = (e) => {
+  // event의 currentTarget 프로퍼티를 사용해
+  // 자식 요소가 아닌 부모의 "data-id"를 받아올 수 있게 했다
+  const id = e.currentTarget.getAttribute("data-id");
+  console.log(e.currentTarget);
+  alert(`영화 ID: ${id}`);
+};
+
+const onSearchClicked = (e) => {
+  e.preventDefault();
+  const value = document.getElementById("input").value;
+  filterMovies(value);
+};
+
+// 미구현 사항 : 청불 영화/연도별 영화 필터를 넣을 계획
+const filterMovies = (value, option = "title") => {
+  console.log(value);
+  let cards = Array.from(document.querySelectorAll(".movie-title"));
+  let cardsToDel = [];
+  let cardsToShow = cards.filter((card) => {
+    let title = card.innerHTML;
+    let valueToLowerCase = value.toLowerCase();
+    if (title.toLowerCase().includes(valueToLowerCase)) {
+      // card.closest(".movie-card").classList.add("hidden");
+      return card;
+    } else cardsToDel.push(card);
+  });
+  if (cardsToShow.length == 0) {
+    alert(`입력하신 '${value}'와 일치하는 영화가 없습니다!`);
+    return;
+  } else {
+    cardsToDel.forEach((card) =>
+      card.closest(".movie-card").classList.add("hidden")
+    );
+    resetBtn.innerText += `${cardsToShow.length}개의 검색 결과 초기화`;
+    resetBtn.classList.remove("invisible");
+  }
+};
+
+const onResetBtnClicked = (e) => {
+  e.target.classList.add("invisible");
+  let cards = document.querySelectorAll(".movie-card");
+  cards.forEach((card) => card.classList.remove("hidden"));
+};
+submitBtn.addEventListener("click", onSearchClicked);
+resetBtn.addEventListener("click", onResetBtnClicked);
 getMovies();

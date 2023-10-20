@@ -28,7 +28,7 @@
             </div>
             <form onsubmit="" class="nav-search">
               <label for="title">영화 검색 </label>
-              <input name="title" type="text" />
+              <input id="input" name="title" type="text" />
               <button class="button button-search" type="submit">
                 <img src="./src/search.svg" alt="search" width="32px" />
               </button>
@@ -43,25 +43,8 @@
         <aside>코딩만 하지 말고 영화도 좀 보고 살자</aside>
       </div>
       <main>
-        <section class="card-list">
-          <article class="movie-card">
-            <img
-              src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
-              alt="The Godfather"
-            />
-            <div class="movie-card-content">
-              <h3 class="movie-title">The Godfather</h3>
-              <p class="movie-synop">
-                Spanning the years 1945 to 1955, a chronicle of the fictional
-                Italian-American Corleone crime family. When organized crime
-                family patriarch, Vito Corleone barely survives an attempt on
-                his life, his youngest son, Michael steps in to take care of the
-                would-be killers, launching a campaign of bloody revenge.
-              </p>
-              <p class="movie-rating">Rating: 8.7</p>
-            </div>
-          </article>
-        </section>
+        <button class="button button-reset invisible">검색 결과 초기화</button>
+        <section class="card-list"></section>
       </main>
       <footer>
         <p class="cheer">리액트 3기 화이팅! B조 7팀 화이팅!</p>
