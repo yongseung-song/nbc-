@@ -122,7 +122,6 @@ const filterMovies = (value, option = "title") => {
 
 const onResetBtnClicked = (e) => {
   e.target.classList.add("invisible");
-
   showAllCards();
 };
 
