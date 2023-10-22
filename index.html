@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="./src/sparta.ico" />
     <title>SpartaFlix</title>
   </head>
   <body>
@@ -43,8 +44,17 @@
         <aside>코딩만 하지 말고 영화도 좀 보고 살자</aside>
       </div>
       <main>
-        <button class="button button-reset invisible">검색 결과 초기화</button>
+        <div class="button-container">
+          <button class="button button-filter">장르별로 모아보기</button>
+          <fieldset class="hidden">
+            <ul class="genre-container"></ul>
+          </fieldset>
+          <button class="button button-reset">검색 결과 초기화</button>
+        </div>
         <section class="card-list"></section>
+        <div class="button-page-wrap">
+          <button class="button button-more-item">더 보기</button>
+        </div>
       </main>
       <footer>
         <p class="cheer">리액트 3기 화이팅! B조 7팀 화이팅!</p>
