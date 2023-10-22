@@ -235,9 +235,6 @@ const filterByTitle = (cards, value) => {
     return card.closest("article").getAttribute("data-id");
   });
 
-  console.log(page);
-  console.log(stringifiedFilterResult);
-  console.log(prevFiltered);
   if (value === "") {
     alert("검색어를 입력해 주십시오.");
     return;
@@ -264,9 +261,7 @@ const filterByGenre = (cards, genres) => {
   let stringifiedFilterResult = cardsToShow.map((card) => {
     return card.getAttribute("data-id");
   });
-  console.log(page);
-  console.log(stringifiedFilterResult);
-  console.log(prevFiltered);
+
   if (String(prevFiltered) === String(stringifiedFilterResult)) {
     getMovie(++page);
   } else {
