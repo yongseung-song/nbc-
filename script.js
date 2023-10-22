@@ -149,11 +149,19 @@ const onResetBtnClicked = (e) => {
 };
 
 const onDarkmodeBtnClicked = (e) => {
-  body.classList.toggle("dark-mode");
+  document.querySelector("body").classList.toggle("dark-mode");
   header.classList.toggle("dark-mode");
   footer.classList.toggle("dark-mode");
   document.querySelector("#sidebar-right").classList.toggle("dark-mode");
   document.querySelector("#sidebar-left").classList.toggle("dark-mode");
+  // filterBtn.classList.toggle("dark-mode");
+  document.querySelectorAll("main .button").forEach((btn) => {
+    btn.classList.toggle("dark-mode-buttons");
+  });
+  document.querySelector("fieldset").classList.toggle("dark-mode-buttons");
+  document.querySelectorAll("ul label").forEach((btn) => {
+    btn.classList.toggle("dark-mode-buttons");
+  });
   document
     .querySelectorAll(".movie-card")
     .forEach((card) => card.classList.toggle("dark-mode"));

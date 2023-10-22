@@ -8,15 +8,26 @@
 .dark-mode {
   color: white;
   background-color: rgb(17, 20, 25);
-  /* border-bottom: 0.5px solid white;
-  border-right: 0.5px solid white;
-  border-left: 0.5px solid white; */
   box-sizing: border-box;
   box-shadow: none !important;
 }
 .dark-mode-buttons {
-  background-color: #ddd;
+  /* background-color: #ddd; */
+  color: white;
+  background-color: rgb(17, 20, 25);
+  border: 0.5px solid white;
 }
+button.dark-mode-buttons {
+  /* background-color: #ddd; */
+  color: white;
+  background-color: rgb(17, 20, 25);
+  border: 0.5px solid white;
+}
+button.dark-mode-buttons:hover {
+  /* background-color: #ddd; */
+  color: black;
+}
+
 body,
 p,
 h3 {
@@ -75,7 +86,7 @@ fieldset {
   box-sizing: border-box;
   border: 0.5px solid black;
   background-color: white;
-  padding: 40px 0 12px;
+  padding: 40px 0 0;
   border-radius: 24px;
   top: 0;
   left: -2px;
@@ -201,8 +212,14 @@ footer.dark-mode {
   padding: 4px;
   cursor: pointer;
 }
+.checkbox + label.dark-mode-buttons {
+  border: 0.5px solid white;
+}
 .checkbox:checked + label {
   background-color: #f6fb64;
+}
+.checkbox:checked + label.dark-mode-buttons {
+  color: black;
 }
 .button-filter {
   position: relative;
