@@ -72,7 +72,7 @@ const makeCards = (movies) => {
     name.classList.add("movie-title");
     contents.innerText = overview;
     contents.classList.add("movie-overview");
-    rating.innerText = `rating: ${vote_average}`;
+    rating.innerHTML = `${vote_average} / <span>10</span>`;
     rating.classList.add("movie-rating");
     div.appendChild(name);
     div.appendChild(contents);
