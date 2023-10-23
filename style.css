@@ -49,7 +49,7 @@ header {
   box-sizing: border-box;
   background-color: white;
   border-bottom: 0.5px solid black;
-  z-index: 2;
+  z-index: 3;
 }
 header.dark-mode {
   border-bottom: 0.5px solid white;
@@ -165,13 +165,13 @@ footer.dark-mode {
   top: 0px;
   padding: 4px 12px 0;
   height: 100vh;
-  font-size: 3rem;
+  font-size: 3.8rem;
   font-family: "Times New Roman", Times, serif;
   /* color: white; */
 }
 #sidebar-right {
   grid-area: rightbar;
-  line-height: 3.1rem;
+  line-height: 3.8rem;
   padding-left: 10px;
   border-left: 0.5px solid black;
 }
@@ -180,7 +180,7 @@ footer.dark-mode {
 }
 #sidebar-left {
   grid-area: leftbar;
-  line-height: 3.6rem;
+  line-height: 4.5rem;
   padding-right: 10px;
   border-right: 0.5px solid black;
 }
@@ -242,7 +242,7 @@ footer.dark-mode {
 }
 .card-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   justify-content: center;
   gap: 60px 20px;
   padding: 0px 24px;
@@ -254,7 +254,7 @@ footer.dark-mode {
   border-radius: 7px;
   margin: 0 8px;
   box-sizing: border-box;
-  box-shadow: 0px 8px 8px #eee;
+  /* box-shadow: 0px 8px 8px #eee; */
   justify-self: center;
   cursor: pointer;
 }
@@ -266,7 +266,7 @@ article.dark-mode {
 .movie-card-content {
   /* padding: 12px 16px; */
 }
-article.dark-mode p {
+article p.dark-mode {
   background-color: black;
 }
 
@@ -328,4 +328,178 @@ article p.movie-rating {
 }
 .copyright {
   font-size: 0.8rem;
+}
+@media (max-width: 1440px) {
+  body {
+  }
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .sidebar {
+    position: sticky;
+    align-self: start;
+    top: 0px;
+    padding: 4px 12px 0;
+    height: 100vh;
+    font-size: 3rem;
+    font-family: "Times New Roman", Times, serif;
+    /* color: white; */
+  }
+  #sidebar-right {
+    grid-area: rightbar;
+    line-height: 3.1rem;
+    padding-left: 10px;
+    border-left: 0.5px solid black;
+  }
+  #sidebar-right.dark-mode {
+    border-left: 0.5px solid white;
+  }
+  #sidebar-left {
+    grid-area: leftbar;
+    line-height: 3.6rem;
+    padding-right: 10px;
+    border-right: 0.5px solid black;
+  }
+  #sidebar-left.dark-mode {
+    border-right: 0.5px solid white;
+  }
+}
+
+@media (max-width: 1279px) {
+  body {
+  }
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .sidebar {
+    font-size: 2.5rem;
+  }
+  #sidebar-right {
+    line-height: 2.6rem;
+  }
+  #sidebar-left {
+    line-height: 3rem;
+  }
+}
+/* 테블릿 가로 (해상도 768px ~ 1023px)*/
+@media (max-width: 1023px) {
+  body {
+  }
+  .card-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 10px;
+    padding: 0px 24px;
+    margin-bottom: 24px;
+    margin-top: 12px;
+  }
+
+  .sidebar {
+    font-size: 2rem;
+  }
+  #sidebar-right {
+    line-height: 1.95rem;
+  }
+  #sidebar-left {
+    line-height: 2.3rem;
+  }
+}
+
+/* 모바일 가로 & 테블릿 세로 (해상도 480px ~ 767px)*/
+@media (max-width: 767px) {
+  body {
+  }
+  .card-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 10px;
+    padding: 0px 24px;
+    margin-bottom: 24px;
+    margin-top: 12px;
+  }
+
+  .sidebar {
+    font-size: 1.5rem;
+  }
+  #sidebar-right {
+    line-height: 1.54rem;
+  }
+  #sidebar-left {
+    line-height: 1.78rem;
+  }
+}
+
+/* 모바일 세로 (해상도 ~ 479px)*/
+@media (max-width: 479px) {
+  header {
+    width: 100%;
+    grid-area: header;
+    top: 0px;
+    padding: 6px 20px;
+    box-sizing: border-box;
+    background-color: white;
+    border-bottom: 0.5px solid black;
+    z-index: 2;
+  }
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .button-container {
+    width: fit-content;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 24px auto;
+  }
+  .button-filter {
+    text-align: center;
+    margin-right: initial;
+  }
+  .button-reset {
+    position: fixed;
+    z-index: 2;
+    bottom: 100px;
+    right: 20px;
+    background-color: white;
+  }
+  .nav-container {
+    flex-direction: column;
+  }
+  .card-list {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px 10px;
+    padding: 0px 24px;
+    margin-bottom: 24px;
+    margin-top: 12px;
+  }
+
+  .sidebar {
+    display: none;
+    padding: 4px 12px 0;
+    height: 100vh;
+    font-size: 3rem;
+    font-family: "Times New Roman", Times, serif;
+    /* color: white; */
+  }
+  .sidebar {
+  }
+  #sidebar-right {
+    bottom: 0;
+    left: 0;
+    height: auto;
+    line-height: 1.54rem;
+  }
+  #sidebar-left {
+    height: auto;
+    top: 0;
+    left: 0;
+    line-height: 3.5rem;
+  }
+  footer {
+    width: 100%;
+  }
 }

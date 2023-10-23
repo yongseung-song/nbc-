@@ -7,6 +7,12 @@ const darkmodeBtn = document.querySelector(".button-darkmode");
 const resetBtn = document.querySelector(".button-reset");
 const filterBtn = document.querySelector(".button-filter");
 const moreBtn = document.querySelector(".button-more-item");
+let page = 1;
+let filter;
+let genres = [];
+let value;
+let totalPages;
+let prevFiltered;
 
 const options = {
   method: "GET",
@@ -16,12 +22,7 @@ const options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YTVlZDU5NmIzNTk4ODZmNjY1MDdmOTgzMjM2NWVmNCIsInN1YiI6IjY1MmY4NGU2ZWE4NGM3MDBjYTEyZGYxZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.EIRykaMpZeWLXpjyuX2pzqu0h562vsjwcptRXfSwL0s",
   },
 };
-let page = 1;
-let filter;
-let genres = [];
-let value;
-let totalPages;
-let prevFiltered;
+
 // TMDB API에서 Top Rated Movies 데이터 받아오기
 const getMovie = (page = 1) => {
   const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`;
@@ -44,6 +45,7 @@ const makeCards = (movies) => {
   const baseUrl = "http://image.tmdb.org/t/p/";
   const posterSize = "w500";
   totalPages = movies["total_pages"];
+  console.log(movies);
   movies.results.forEach((movie) => {
     // 카드를 구성하는 elements를 생성한다
     const cardList = document.querySelector(".card-list");
@@ -53,14 +55,13 @@ const makeCards = (movies) => {
     const name = document.createElement("h3");
     const contents = document.createElement("p");
     const rating = document.createElement("p");
-    // 영화 객체에서 제목, 이미지경로, 내용, 평점 property를 뽑아내 저장한다
+    // 영화 객체의 제목, 이미지경로, 내용, 평점 property를 구조 분해 및 할당을 이용해 저장한다
     const { title, poster_path, overview, vote_average, id, genre_ids } = movie;
     // 객체에서 뽑아낸 경로를 더해 완성한 이미지 전체 경로
     const url = baseUrl + posterSize + poster_path;
     // console.log(name, poster_path);
 
     // 생성한 DOM element에 필요한 데이터를 넣어주는 과정
-
     card.setAttribute("data-id", id);
     card.setAttribute("data-genres", genre_ids.join());
     card.classList.add("movie-card");
@@ -80,12 +81,16 @@ const makeCards = (movies) => {
     card.appendChild(img);
     card.appendChild(div);
     cardList.appendChild(card);
-
-    checkPage();
   });
+
+  // 마지막 페이지까지 로드되면 더보기 버튼 비활성화
+  if (page === totalPages) moreBtn.classList.toggle("invisible");
+
+  // filter가 적용중이라면 페이지를 그린 직후 필터링을 한다
   filterMovies(filter, value, genres);
 };
 
+// 장르를 list element로 만들어 필터리스트에 넣는 함수
 const makeGenre = (genres) => {
   const genreBox = document.querySelector("fieldset");
   genres.forEach((genre, idx) => {
@@ -97,6 +102,7 @@ const makeGenre = (genres) => {
     li.classList.add("genre-item");
     input.setAttribute("type", "checkbox");
     input.setAttribute("name", "genre");
+    // 구조 분해 및 할당을 통해 genre 객체에서 id와 장르의 이름을 받아온다.
     const { id, name } = genre;
     input.setAttribute("id", name);
     input.setAttribute("data-genres", id);
@@ -114,23 +120,27 @@ const makeGenre = (genres) => {
 
 // 카드 클릭시 ID 를 보여주기 위한 이벤트 핸들러
 const onCardClicked = (e) => {
-  // event의 currentTarget 프로퍼티를 사용해
-  // 자식 요소가 아닌 부모의 "data-id"를 받아올 수 있게 했다
+  // event의 currentTarget 프로퍼티를 사용해 자식 요소가 아닌 부모의 "data-id"를 받아올 수 있게 했다
   const id = e.currentTarget.getAttribute("data-id");
   alert(`영화 ID: ${id}`);
 };
 
+// 더 보기 버튼을 누르면 다음 top rated 영화 페이지를 로드한다
 const onMoreBtnClicked = (e) => {
   getMovie(++page);
 };
 
+// 검색 버튼 이벤트 핸들러
 const onSearchClicked = (e) => {
   e.preventDefault();
+  // 검색 버튼을 누르기 이전에 적용되었던 필터가 장르별 검색 필터라면, 장르 선택을 모두 취소하고 장르 선택 창을 숨긴다
+  // 또한 필터가 바뀌기 때문에 이전에 필터되었던 항목도 비운다
   if (filter === "genre") {
     removeGenres();
     closeGenreBox();
     prevFiltered = [];
   }
+  // 필터를 바꿈
   filter = "title";
   const input = document.getElementById("input");
   value = input.value;
@@ -162,12 +172,12 @@ const onDarkmodeBtnClicked = (e) => {
   document.querySelectorAll("ul label").forEach((btn) => {
     btn.classList.toggle("dark-mode-buttons");
   });
-  document
-    .querySelectorAll(".movie-card")
-    .forEach((card) => card.classList.toggle("dark-mode"));
-  document
-    .querySelectorAll("p")
-    .forEach((p) => p.classList.toggle("dark-mode"));
+  document.Array.from(querySelectorAll(".movie-card")).forEach((card) =>
+    card.classList.toggle("dark-mode")
+  );
+  document.Array.from(querySelectorAll("p")).forEach((p) =>
+    p.classList.toggle("dark-mode")
+  );
   // e.target.closest("div").classList.toggle("dark-mode-buttons");
 };
 
@@ -195,10 +205,6 @@ const onGenreItemClicked = (e) => {
 
 const onFilterBtnClicked = (e) => {
   document.querySelector("fieldset").classList.toggle("hidden");
-};
-
-const checkPage = () => {
-  if (page === totalPages) moreBtn.classList.toggle("invisible");
 };
 
 function showAllCards() {
